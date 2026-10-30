@@ -14,7 +14,19 @@ python3 python/run.py webhook
 
 Set the common [environment variables](../README.md#configure-once). Prefer a short-lived `MDLOGIC_TOKEN` from your server's authorized user connection. For your own account's automation, alternatively inject `MDLOGIC_CLIENT_ID` and `MDLOGIC_CLIENT_SECRET`; the program exchanges them once and holds the token in memory. Never place credentials in a browser bundle, committed file or shell history. [Connecting an individual user's account](../docs/report-workflow.md#connect-the-right-account) requires the actual supported authorization flow through your backend.
 
-[run.py](run.py) contains the six scenario branches. Local state defaults to `.local/python/`; override `MDLOGIC_STATE_DIR` for another isolated user/run. Files have private permissions on POSIX systems; configure user-only ACLs on Windows. `state.json` stores stable IDs and the last successful revision. `share.json` contains a private access URL; `webhook.json` contains the once-only signing secret. The program prints IDs/paths rather than those secrets.
+Start with [scenarios.py](scenarios.py): each numbered task is a named function with its inputs and API calls in one place.
+
+| File | What to follow |
+| --- | --- |
+| [run.py](run.py) | Small command dispatcher and safe console errors |
+| [scenarios.py](scenarios.py) | `create_project` (01), `create_report` (02), `update_report` (03), `export_report` (04), `share_report` (05), `register_webhook` (06) |
+| [state.py](state.py) | Stable mappings, exact UTF-8 input and private recovery journals |
+| [api.py](api.py) | Server-side authentication, bounded HTTP attempts and sanitized errors |
+| [receiver.py](receiver.py) | Signature verification, envelope checks and durable duplicate handling |
+
+Read scenario 02 beside scenario 03 to see the difference between creating once and updating the same stable document ID. The helpers keep file and transport details out of each task; they are limited to this example workflow.
+
+Local state defaults to `.local/python/`; override `MDLOGIC_STATE_DIR` for another isolated user/run. Files have private permissions on POSIX systems; configure user-only ACLs on Windows. `state.json` stores stable IDs and the last successful revision. `share.json` contains a private access URL; `webhook.json` contains the once-only signing secret. The program prints IDs/paths rather than those secrets.
 
 Before 01, 02, 05 or 06 sends a create, a private `pending-<number>.json` captures the original origin, path and exact payload. Failure or an unknown response keeps it and blocks another create. A malformed share/webhook success response is retained privately and does not clear the marker. Reconcile the original operation before retrying. These small local files assume one process; production needs transactional unique mappings and job coordination.
 
