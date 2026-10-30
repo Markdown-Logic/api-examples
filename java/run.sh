@@ -7,5 +7,5 @@ if [[ ! -f "$gson_jar" ]]; then
   exit 1
 fi
 mkdir -p java/target/classes
-javac --release 17 --add-modules jdk.httpserver -cp "$gson_jar" -d java/target/classes java/ReportExamples.java
-exec java --add-modules jdk.httpserver -cp "java/target/classes:$gson_jar" ReportExamples "$@"
+javac --release 17 --add-modules jdk.httpserver -cp "$gson_jar" -d java/target/classes java/src/main/java/com/markdownlogic/examples/*.java
+exec java --add-modules jdk.httpserver -cp "java/target/classes:$gson_jar" com.markdownlogic.examples.ReportExamples "$@"

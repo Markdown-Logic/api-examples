@@ -47,6 +47,6 @@ case "$language" in
   python) command=(python3 python/run.py "$@");;
   shell) command=(bash shell/run.sh "$@");;
   go) command=(bash -c 'set -euo pipefail; cd go; export GOCACHE=/cache/build GOMODCACHE=/cache/modules; go build -o /tmp/example .; cd /src; exec /tmp/example "$@"' -- "$@");;
-  java) command=(bash -c 'set -euo pipefail; jar=/cache/maven/com/google/code/gson/gson/2.13.2/gson-2.13.2.jar; mkdir -p /tmp/classes; javac --release 17 --add-modules jdk.httpserver -cp "$jar" -d /tmp/classes java/ReportExamples.java; exec java -Djava.net.preferIPv4Stack=true --add-modules jdk.httpserver -cp "/tmp/classes:$jar" ReportExamples "$@"' -- "$@");;
+  java) command=(bash java/container-run.sh "$@");;
 esac
 exec docker "${args[@]}" "$image" "${command[@]}"
