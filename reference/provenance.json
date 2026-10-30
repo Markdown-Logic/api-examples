@@ -1,0 +1,10 @@
+{
+  "url": "https://api.markdownlogic.com/api/v1/openapi.json",
+  "retrievedAt": "2026-10-29T22:26:20.453220+00:00",
+  "sha256": "19f1d879979a53d77e957ca6572b8fc28529c92b56c030fadba5dc6a935259f1",
+  "bytes": 302967,
+  "openapi": "3.0.3",
+  "infoVersion": "1.1.0",
+  "productionCommit": null,
+  "packagingChanges": "none; verbatim response bytes"
+}

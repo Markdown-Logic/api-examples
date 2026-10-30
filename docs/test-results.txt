@@ -1,0 +1,26 @@
+test_create_recovery_and_input_validation (__main__.ContractTests.test_create_recovery_and_input_validation) ... ok
+test_scenarios_and_failures (__main__.ContractTests.test_scenarios_and_failures) ... ok
+test_webhook_receivers (__main__.ContractTests.test_webhook_receivers) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 231.938s
+
+OK
+PASS node-docker: uncertain share/webhook rerun blocked, strict UTF-8, malformed mutation evidence retained
+PASS java-docker: uncertain share/webhook rerun blocked, strict UTF-8, malformed mutation evidence retained
+PASS go-docker: uncertain share/webhook rerun blocked, strict UTF-8, malformed mutation evidence retained
+PASS python-docker: uncertain share/webhook rerun blocked, strict UTF-8, malformed mutation evidence retained
+PASS shell-docker: uncertain share/webhook rerun blocked, strict UTF-8, malformed mutation evidence retained
+PASS csharp-docker: uncertain share/webhook rerun blocked, strict UTF-8, malformed mutation evidence retained
+PASS node-docker: 01–06, retry bounds/date/fallback, write refusal/uncertainty, auth, private output, redirects
+PASS java-docker: 01–06, retry bounds/date/fallback, write refusal/uncertainty, auth, private output, redirects
+PASS go-docker: 01–06, retry bounds/date/fallback, write refusal/uncertainty, auth, private output, redirects
+PASS python-docker: 01–06, retry bounds/date/fallback, write refusal/uncertainty, auth, private output, redirects
+PASS shell-docker: 01–06, retry bounds/date/fallback, write refusal/uncertainty, auth, private output, redirects
+PASS csharp-docker: 01–06, retry bounds/date/fallback, write refusal/uncertainty, auth, private output, redirects
+PASS node-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+PASS java-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+PASS go-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+PASS python-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+PASS shell-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+PASS csharp-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1

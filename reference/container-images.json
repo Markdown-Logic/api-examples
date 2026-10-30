@@ -1,0 +1,70 @@
+{
+  "checkedAt": "2026-10-30T12:48:16.564704+00:00",
+  "platform": "Docker on OrbStack / macOS arm64",
+  "images": [
+    {
+      "language": "node",
+      "image": "node:22-bookworm-slim",
+      "imageId": "sha256:69f266c3ec9d93ce85b5643431560e9eedefb54f252730c84453239c2e68f071",
+      "repoDigests": [
+        "node@sha256:4b150b48b4116e2a22f2c39cc27025fbf4f153e2078fd3b14d159fdb5c7279da"
+      ],
+      "os": "linux",
+      "architecture": "arm64",
+      "version": "v22.23.4"
+    },
+    {
+      "language": "java",
+      "image": "maven:3.9-eclipse-temurin-17",
+      "imageId": "sha256:b43cbf70bce1159bccab710baa1d56609597cb4683c65809f07889ee35dbe728",
+      "repoDigests": [
+        "maven@sha256:1a352420f7aba21f5ad08df31bab55f74c013fb491f1ae8ab1dd7ff9ed698584"
+      ],
+      "os": "linux",
+      "architecture": "arm64",
+      "version": "openjdk version \"17.0.20.1\" 2026-08-18\nOpenJDK Runtime Environment Temurin-17.0.20.1+1 (build 17.0.20.1+1)\nOpenJDK 64-Bit Server VM Temurin-17.0.20.1+1 (build 17.0.20.1+1, mixed mode, sharing)"
+    },
+    {
+      "language": "csharp",
+      "image": "mcr.microsoft.com/dotnet/sdk:8.0@sha256:6ba9644da07bb5b560a402acec9ca38711a0762969f1b61da261df5c9f6f85da",
+      "imageId": "sha256:6ed98899a1020df51021ba06f719f02d05de23f5776e29b4bd1675de7ada8b63",
+      "repoDigests": [
+        "mcr.microsoft.com/dotnet/sdk@sha256:6ba9644da07bb5b560a402acec9ca38711a0762969f1b61da261df5c9f6f85da"
+      ],
+      "os": "linux",
+      "architecture": "arm64",
+      "version": ".NET SDK:\n Version:           8.0.427\n Commit:            38c6707c62\n Workload version:  8.0.400-manifests.29236f5f\n MSBuild version:   17.11.69+4d6a29faa\n\nRuntime Environment:\n OS Name:     debian\n OS Version:  12\n OS Platform: Linux\n RID:         linux-arm64\n Base Path:   /usr/share/dotnet/sdk/8.0.427/\n\n.NET workloads installed:\nConfigured to use loose manifests when installing new manifests.\nThere are no installed workloads to display.\n\nHost:\n  Version:      8.0.33\n  Architecture: arm64\n  Commit:       da7a9beabf\n\n.NET SDKs installed:\n  8.0.427 [/usr/share/dotnet/sdk]\n\n.NET runtimes installed:\n  Microsoft.AspNetCore.App 8.0.33 [/usr/share/dotnet/shared/Microsoft.AspNetCore.App]\n  Microsoft.NETCore.App 8.0.33 [/usr/share/dotnet/shared/Microsoft.NETCore.App]\n\nOther architectures found:\n  None\n\nEnvironment variables:\n  Not set\n\nglobal.json file:\n  Not found\n\nLearn more:\n  https://aka.ms/dotnet/info\n\nDownload .NET:\n  https://aka.ms/dotnet/download"
+    },
+    {
+      "language": "go",
+      "image": "golang:1-bookworm",
+      "imageId": "sha256:dba766c2797d15d2b6e35651bd5acb02764b27611e9b89bba1100a54a0167bf7",
+      "repoDigests": [
+        "golang@sha256:d9b6a1beb9474adc2a1ce842573639b44b2a0dd49b6669f51d3821baf9ec37c9"
+      ],
+      "os": "linux",
+      "architecture": "arm64",
+      "version": "go version go1.27.3 linux/arm64"
+    },
+    {
+      "language": "python",
+      "image": "python:3.11-slim-bookworm",
+      "imageId": "sha256:5bc33246ad7c3481addfaf44161555fb8858612cc08e7e92a55668b7e17d74ff",
+      "repoDigests": [
+        "python@sha256:94a8fee35252d06ab75856f15f12c7bae67b10e8a6da93c7fded82b2610926cd"
+      ],
+      "os": "linux",
+      "architecture": "arm64",
+      "version": "Python 3.11.18"
+    },
+    {
+      "language": "shell",
+      "image": "api-examples-shell:local",
+      "imageId": "sha256:110859a0933ba0ed2cc67a00c321ca830795901d3d05d78b6cab2bb8cbb19e04",
+      "repoDigests": [],
+      "os": "linux",
+      "architecture": "arm64",
+      "version": "GNU bash, version 5.2.15(1)-release (aarch64-unknown-linux-gnu)\nPython 3.11.18\ncurl 7.88.1 (aarch64-unknown-linux-gnu) libcurl/7.88.1 OpenSSL/3.0.22 zlib/1.2.13 brotli/1.0.9 zstd/1.5.4 libidn2/2.3.3 libpsl/0.21.2 (+libidn2/2.3.3) libssh2/1.10.0 nghttp2/1.52.0 librtmp/2.3 OpenLDAP/2.5.13\njq-1.6"
+    }
+  ]
+}

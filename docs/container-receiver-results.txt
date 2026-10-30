@@ -1,0 +1,12 @@
+test_webhook_receivers (__main__.BridgeReceivers.test_webhook_receivers) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 10.041s
+
+OK
+PASS node-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+PASS java-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+PASS go-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+PASS python-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+PASS shell-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+PASS csharp-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1

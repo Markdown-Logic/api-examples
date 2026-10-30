@@ -1,0 +1,68 @@
+{
+  "checkedAt": "2026-10-29T22:27:25.681942+00:00",
+  "links": [
+    {
+      "url": "https://api.markdownlogic.com/",
+      "status": 200,
+      "finalUrl": "https://api.markdownlogic.com/",
+      "sha256": "d8e4ce7be34ee7cb2c91335d2261ba53d32359dd22749d71e9e564d5e24b07f0",
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "url": "https://api.markdownlogic.com/api/v1/openapi.json",
+      "status": 200,
+      "finalUrl": "https://api.markdownlogic.com/api/v1/openapi.json",
+      "sha256": "19f1d879979a53d77e957ca6572b8fc28529c92b56c030fadba5dc6a935259f1",
+      "contentType": "application/json"
+    },
+    {
+      "url": "https://auth.markdownlogic.com/.well-known/oauth-authorization-server",
+      "status": 200,
+      "finalUrl": "https://auth.markdownlogic.com/.well-known/oauth-authorization-server",
+      "sha256": "065bc86009bc551c8afa3233a3c89d8a301daa5ad54b9551ec7bffb93b71e8f1",
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://markdownlogic.com/help/en/use-the-rest-api",
+      "status": 200,
+      "finalUrl": "https://markdownlogic.com/help/en/use-the-rest-api",
+      "sha256": "a3fa400744095ad8272d0776fb424a4d867b4f527ce2fc1bea99e0dd20250118",
+      "contentType": "text/html"
+    },
+    {
+      "url": "https://markdownlogic.com/help/en/receive-webhooks",
+      "status": 200,
+      "finalUrl": "https://markdownlogic.com/help/en/receive-webhooks",
+      "sha256": "4790edae5c93ed27c9583c34f911e991c66a6818778aa8e89bb6db620c4710f3",
+      "contentType": "text/html"
+    },
+    {
+      "url": "https://markdownlogic.com/help/en/install-the-cli",
+      "status": 200,
+      "finalUrl": "https://markdownlogic.com/help/en/install-the-cli",
+      "sha256": "568a11aefd17661a9204dbd26e5c9de349b6ca4635fa130a8f9db2615cb319aa",
+      "contentType": "text/html"
+    },
+    {
+      "url": "https://markdownlogic.com/help/en/export-from-the-cli",
+      "status": 200,
+      "finalUrl": "https://markdownlogic.com/help/en/export-from-the-cli",
+      "sha256": "06927280c1738a808564a9b8f5baf491d8ab48487dcd58b6442894a370846264",
+      "contentType": "text/html"
+    },
+    {
+      "url": "https://markdownlogic.com/help/en/share-a-document",
+      "status": 200,
+      "finalUrl": "https://markdownlogic.com/help/en/share-a-document",
+      "sha256": "1bb2c02a16db02a28f43b6480de01dec32663a65b32440fbbc0769ec8f33900f",
+      "contentType": "text/html"
+    },
+    {
+      "url": "https://markdownlogic.com/help/en/automate-team-documents",
+      "status": 200,
+      "finalUrl": "https://markdownlogic.com/help/en/automate-team-documents",
+      "sha256": "284fa4c1e08c58e8496b5de6bc96d1e2217b270674f287be818327b852b73a64",
+      "contentType": "text/html"
+    }
+  ]
+}

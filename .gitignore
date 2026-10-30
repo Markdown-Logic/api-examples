@@ -1,0 +1,8 @@
+.local/
+.env
+*.log
+__pycache__/
+java/target/
+csharp/bin/
+csharp/obj/
+.DS_Store
