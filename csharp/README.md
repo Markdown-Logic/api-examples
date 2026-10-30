@@ -2,6 +2,30 @@
 
 Requires the **.NET 8 SDK**. No NuGet libraries. Run every command from the repository root. These files are small runnable examples; choose the scenario you need and keep your application's authorization, approval and persistence around it.
 
+## Read the examples
+
+Start with [UpdateReportScenario.cs](UpdateReportScenario.cs) to see the essential API workflow: read the document, take its opaque revision, then send one guarded update. Each command has its own file so the request and the resulting state change can be read together.
+
+| Command | Task-focused source |
+| --- | --- |
+| 01 | [CreateProjectScenario.cs](CreateProjectScenario.cs) — create, list and rename a project |
+| 02 | [StoreReportScenario.cs](StoreReportScenario.cs) — store the generated report |
+| 03 | [UpdateReportScenario.cs](UpdateReportScenario.cs) — replace approved content with a revision guard |
+| 04 | [ExportReportScenario.cs](ExportReportScenario.cs) — inspect history and export HTML |
+| 05 | [ShareReportScenario.cs](ShareReportScenario.cs) — create an explicitly requested share |
+| 06 | [RegisterWebhookScenario.cs](RegisterWebhookScenario.cs) — register lifecycle events |
+
+[Program.cs](Program.cs) handles command selection and safe error output; [ReportExamples.cs](ReportExamples.cs) dispatches numbered scenarios. The standard .NET project includes all `.cs` files automatically, so no file list needs to be maintained when building.
+
+Shared code has a narrow purpose:
+
+- [MdlApi.cs](MdlApi.cs) supplies authentication, JSON/byte requests, request deadlines and bounded read retries. Async methods follow the C# `Async` naming convention.
+- [ExampleState.cs](ExampleState.cs) loads stable IDs, builds resource paths and records create intent before a request. Its XML comments explain recovery boundaries.
+- [PrivateFiles.cs](PrivateFiles.cs) flushes private files before publishing them with a rename.
+- [WebhookReceiver.cs](WebhookReceiver.cs) keeps the listener separate from the outbound examples, authenticates the original bytes, and accepts each signed event once.
+
+## Run the scenarios
+
 Set the common environment variables in the root getting-started guide. Use an existing short-lived `MDLOGIC_TOKEN`, or keep `MDLOGIC_CLIENT_ID` and `MDLOGIC_CLIENT_SECRET` on your server for client credentials. No credential is written to the state file. A user-consent token should come from your server's supported authorization-code + PKCE flow, described in the root auth guide; client credentials do not connect an arbitrary user's account.
 
 ```sh

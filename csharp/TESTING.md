@@ -1,5 +1,7 @@
 # C# tests
 
+The numbered scenarios are separate classes; the shared harness still exercises the public command interface rather than calling private helpers. This keeps the checks useful if implementation details change.
+
 The shared localhost contract harness covers these behaviors when run against `dotnet run --project csharp -- <scenario>`:
 
 1. Scenarios 01–06 issue the same routes/bodies as the other languages; create persists stable mappings and a private original-target/payload marker until success, update sends the just-read opaque revision, history is bounded, export writes bytes, share and webhook registration require explicit commands.

@@ -5,20 +5,30 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
+/// <summary>Authenticates deliveries and records each signed event once in a private inbox.</summary>
 static class WebhookReceiver
 {
     const int MaximumBodyBytes = 1024 * 1024;
 
-    public static async Task Run()
+    /// <summary>Starts a local listener; deploy behind an HTTPS ingress for real deliveries.</summary>
+    public static async Task RunAsync()
     {
         string secret = MdlApi.Required("MDLOGIC_WEBHOOK_SECRET");
         string portText = Environment.GetEnvironmentVariable("PORT") ?? "8080";
-        if (!int.TryParse(portText, out int port) || port is < 1 or > 65535) throw new ExampleError("Invalid PORT.");
+        if (!int.TryParse(portText, out int port) || port is < 1 or > 65535)
+        {
+            throw new ExampleError("Invalid PORT.");
+        }
+
         string inbox = Path.Combine(PrivateFiles.StateDirectory(), "inbox");
         PrivateFiles.EnsureDirectory(inbox);
         using var listener = new HttpListener();
         string bind = Environment.GetEnvironmentVariable("MDLOGIC_WEBHOOK_BIND") ?? "127.0.0.1";
-        if (bind != "127.0.0.1" && bind != "0.0.0.0") throw new ExampleError("Invalid webhook bind address.");
+        if (bind != "127.0.0.1" && bind != "0.0.0.0")
+        {
+            throw new ExampleError("Invalid webhook bind address.");
+        }
+
         listener.Prefixes.Add($"http://{(bind == "0.0.0.0" ? "+" : bind)}:{port}/");
         listener.Start();
         Console.WriteLine(JsonSerializer.Serialize(new { listening = $"http://127.0.0.1:{port}/webhook" }));
@@ -27,7 +37,10 @@ static class WebhookReceiver
         while (true)
         {
             var context = await listener.GetContextAsync();
-            try { await Accept(context, secret, inbox); }
+            try
+            {
+                await AcceptAsync(context, secret, inbox);
+            }
             catch (Exception)
             {
                 context.Response.StatusCode = 500;
@@ -36,7 +49,8 @@ static class WebhookReceiver
         }
     }
 
-    static async Task Accept(HttpListenerContext context, string secret, string inbox)
+    /// <summary>Checks the route, authenticates raw bytes, then validates the event envelope.</summary>
+    static async Task AcceptAsync(HttpListenerContext context, string secret, string inbox)
     {
         var request = context.Request;
         if (request.HttpMethod != "POST" || request.Url?.AbsolutePath != "/webhook")
@@ -55,7 +69,11 @@ static class WebhookReceiver
         while (true)
         {
             int count = await request.InputStream.ReadAsync(chunk, timeout.Token);
-            if (count == 0) break;
+            if (count == 0)
+            {
+                break;
+            }
+
             if (buffer.Length + count > MaximumBodyBytes)
             {
                 Reply(context, 413);
@@ -63,17 +81,19 @@ static class WebhookReceiver
             }
             buffer.Write(chunk, 0, count);
         }
+
         byte[] body = buffer.ToArray();
+        // Parse only after authenticating the exact bytes; reserialization changes the signature.
         if (!Verify(request.Headers["MDL-Signature"] ?? "", body, secret))
         {
             Reply(context, 401);
             return;
         }
-        JsonNode? envelope;
-        string id, type;
+        string id;
+        string type;
         try
         {
-            envelope = JsonNode.Parse(body);
+            JsonNode? envelope = JsonNode.Parse(body);
             id = envelope?["id"]?.GetValue<string>() ?? "";
             type = envelope?["type"]?.GetValue<string>() ?? "";
             if (id.Length == 0 || type.Length == 0 || id != request.Headers["MDL-Event-Id"]
@@ -88,6 +108,12 @@ static class WebhookReceiver
             Reply(context, 400);
             return;
         }
+        SaveToInbox(context, inbox, id, body);
+    }
+
+    /// <summary>Publishes a fully flushed event file without overwriting an accepted event.</summary>
+    static void SaveToInbox(HttpListenerContext context, string inbox, string id, byte[] body)
+    {
         // The event id comes from the authenticated body. Never use delivery id:
         // It identifies delivery to one destination and remains stable across retries.
         string name = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(id))).ToLowerInvariant();
@@ -96,7 +122,10 @@ static class WebhookReceiver
         try
         {
             PrivateFiles.WriteNew(temporary, body);
-            try { File.Move(temporary, final, false); }
+            try
+            {
+                File.Move(temporary, final, false);
+            }
             catch (IOException) when (File.Exists(final))
             {
                 Reply(context, 200); // Already durably accepted, including after restart.
@@ -104,17 +133,30 @@ static class WebhookReceiver
             }
             Reply(context, 202);
         }
-        finally { if (File.Exists(temporary)) File.Delete(temporary); }
+        finally
+        {
+            if (File.Exists(temporary))
+            {
+                File.Delete(temporary);
+            }
+        }
     }
 
+    /// <summary>Accepts any valid v1 signature within the five-minute timestamp window.</summary>
     static bool Verify(string header, byte[] body, string secret)
     {
         string[] fields = header.Split(',').Select(part => part.Trim()).ToArray();
         string? timestampText = fields.FirstOrDefault(part => part.StartsWith("t=", StringComparison.Ordinal))?[2..];
         long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         if (!long.TryParse(timestampText, NumberStyles.None, CultureInfo.InvariantCulture, out long timestamp) || timestamp <= 0
-            || timestamp < now - 300 || timestamp > now + 300) return false;
-        byte[] prefix = Encoding.ASCII.GetBytes(timestamp.ToString(CultureInfo.InvariantCulture) + ".");
+            || timestamp < now - 300 || timestamp > now + 300)
+        {
+            return false;
+        }
+
+        // Parse the timestamp only for freshness. The signed material retains its
+        // exact header spelling, followed by a period and the untouched body.
+        byte[] prefix = Encoding.ASCII.GetBytes(timestampText + ".");
         byte[] material = new byte[prefix.Length + body.Length];
         prefix.CopyTo(material, 0);
         body.CopyTo(material, prefix.Length);
@@ -122,10 +164,18 @@ static class WebhookReceiver
         foreach (string field in fields.Where(part => part.StartsWith("v1=", StringComparison.Ordinal)))
         {
             string digest = field[3..];
-            if (digest.Length != 64 || digest.Any(c => !Uri.IsHexDigit(c))) continue;
+            if (digest.Length != 64 || digest.Any(c => !Uri.IsHexDigit(c)))
+            {
+                continue;
+            }
+
             byte[] supplied = Convert.FromHexString(digest);
-            if (CryptographicOperations.FixedTimeEquals(expected, supplied)) return true;
+            if (CryptographicOperations.FixedTimeEquals(expected, supplied))
+            {
+                return true;
+            }
         }
+
         return false;
     }
 

@@ -1,0 +1,13 @@
+Command: bash csharp/docker.sh build
+Image: mcr.microsoft.com/dotnet/sdk:8.0@sha256:6ba9644da07bb5b560a402acec9ca38711a0762969f1b61da261df5c9f6f85da
+Platform: Linux arm64
+
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Examples -> /out/bin/Examples.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:05.06
