@@ -51,7 +51,7 @@ An owner/admin separately configures a public HTTPS receiver using an authorized
 
 ## Recover an uncertain write
 
-A network timeout or connection drop can happen after MDL committed a write. Never infer that “no success response” means “nothing happened.” The ordinary project/document/share creation routes do not offer a universal exactly-once guarantee in this example. Do not invent an `Idempotency-Key` contract from ADP-specific storage internals.
+A network timeout or connection drop can happen after MDL committed a write. Never infer that “no success response” means “nothing happened.” The ordinary project/document/share creation routes do not offer a universal exactly-once guarantee in this example. Use an idempotency key only when the specific operation documents one.
 
 Keep the original payload, connection, team/project and pending marker. Inspect the authorized project's bounded document list or team project list, and read the candidate resource and content using stable IDs where known. Match the original intent and verify ownership/content; a matching name alone is insufficient. Recover the committed ID into your local mapping only after that review. If no candidate can be established, leave the job pending for deliberate resolution. Remove a pending marker only after recovering a committed mapping or confirming the request did not commit and authorizing a new attempt.
 

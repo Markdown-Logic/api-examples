@@ -11,19 +11,19 @@ Checked on 2026-10-30 using synthetic API/OAuth fixtures and signed webhook deli
 | Python | Python 3.15.1, macOS arm64 | Python 3.11.18, Linux arm64 |
 | Shell | Bash 3.2, system curl/jq and Python 3.15.1 | Bash 5.2.15, Debian curl/jq and Python 3.11.18, Linux arm64 |
 
-[Container image IDs/digests](../reference/container-images.json) record exact tested artifacts. Go 1.22 remains a declared/source-reviewed floor, not an executed runtime qualification. Native C# on macOS/Windows, x64 and Windows host scripts are not qualified here. CLI 1.1.0 equivalents were checked for compatibility; installed CLI execution is not part of this matrix.
+[Container image IDs/digests](../reference/container-images.json) record exact tested artifacts. Go 1.22 remains a declared minimum, not an executed runtime qualification. Native C# on macOS/Windows, x64 and Windows host scripts are not qualified here. CLI 1.1.0 equivalents were checked for compatibility; installed CLI execution is not part of this matrix.
 
 The shared matrix covers all six numbered scenarios, actual response envelopes and revision guards, private output, exact UTF-8 input, bounded 429 retries/date/fallback/long waits, 401/409/423, refused redirects, mutation connection-loss ambiguity and complete-body timeout. Unknown project/report/share/webhook creates retain their original intent and block repeats. Malformed mutation responses remain private evidence and do not clear pending state.
 
-[Response validation regressions](response-validation-results.txt) cover wrong field types, empty create/live/update revisions, malformed history, safe malformed-error logs, enormous Retry-After, exact CRLF preservation and curl configuration isolation. Focused suites additionally passed Java 5 tests, shell 3 tests, Python 5 tests and Go 8 tests with race detection/static checks. Cancellation checks confirmed that Java retains interruption state and Python does not reconnect after a timed-out write.
+[Response validation regressions](response-validation-results.txt) cover wrong field types, empty create/live/update revisions, malformed mappings/history/event catalogues, safe malformed-error logs, enormous Retry-After, exact CRLF preservation and curl configuration isolation. Focused suites additionally passed Node 4 tests, Java 7 tests, shell 7 tests, Python 9 tests and Go 9 tests with race detection/static checks. The Java helper restores the interruption flag when a wait is interrupted. Python’s focused tests confirm that a timed-out write cannot reconnect later.
 
-Receivers were tested for valid/invalid/stale/future/tampered signatures, multiple v1 values, signed event identity/type checks, concurrent duplicate acceptance and persistence across restart. [Bridge-port checks](container-receiver-results.txt) exercise all six container receivers through loopback-only host ports. Complete queued JSON is checked; power-loss durability and production transactional business effects are outside this file-inbox demonstration.
+Receivers were tested for valid/invalid/stale/future/tampered signatures, exact timestamp text, multiple v1 values, signed event identity/type checks, concurrent duplicate acceptance and persistence across restart. [Bridge-port checks](container-receiver-results.txt) exercise all six container receivers through loopback-only host ports. Complete queued JSON is checked; power-loss durability and production transactional business effects are outside this file-inbox demonstration.
 
-The final six-container matrix passed all three groups in 231.938 seconds. The five host-runtime matrix passed three groups in 154.580 seconds; all-six container response-validation checks passed in 43.305 seconds, and bridge receiver checks passed in 10.041 seconds.
+The five host-runtime matrix passed all three groups in 337.914 seconds. Its expanded response-validation checks passed in 55.593 seconds. All six official-container implementations passed the full contract suite, expanded response-validation suite and bridge receiver suite in separate sequential runs. The [fresh C# build](csharp-build-results.txt) completed with zero warnings and errors in the pinned .NET 8 image.
 
 Captured results:
 
-- [Full six-container scenario/failure/webhook matrix](test-results.txt).
+- [Six-container scenario/failure/webhook checks](test-results.txt).
 - [Five host-runtime matrix](native-test-results.txt); C# uses the container route.
 - [All six container response-validation checks](response-validation-results.txt).
 - [All six bridge receiver checks](container-receiver-results.txt).

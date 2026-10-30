@@ -2,7 +2,16 @@
 
 Requirements: Bash, curl, jq and Python 3. Python handles origin validation,
 HTTP-date parsing and the webhook receiver using its standard library. Every
-API call in `run.sh` uses curl; there is no MDL SDK dependency.
+API call uses curl; there is no MDL SDK dependency. Bash 3.2 or newer is supported.
+
+Read [`scenarios.sh`](scenarios.sh) first: each named function implements one
+numbered task, in the same order as the other languages. [`run.sh`](run.sh) is
+the entry point. [`http.sh`](http.sh) handles authentication and bounded curl
+requests; [`state.sh`](state.sh) manages private mappings and pending-create
+markers. [`helpers.py`](helpers.py) contains the small standard-library adapters
+for origin validation, retry delays and form encoding.
+[`webhook.py`](webhook.py) is the separate webhook listener. The shell helper
+files are sourced by the entry point, rather than run independently.
 
 Run from the repository root. Obtain authorized credentials and a team ID using
 the [common getting-started guide](../README.md); keep credentials server-side.
@@ -24,7 +33,10 @@ Local input is never overwritten or removed. Outputs default to `.local/shell/`,
 with private directory/file permissions. `MDLOGIC_STATE_DIR` selects another
 private location. `state.json` records stable project/document IDs and revision;
 `share.json` holds the private share URL. Only IDs and file paths are printed.
-Do not put the output directory in a web server's document root.
+Do not put the output directory in a web server's document root. The entry point
+validates the mapping before authentication; malformed state is preserved for
+inspection. Response helpers check required IDs and revisions before a task can
+use them, without echoing raw response diagnostics.
 
 01, 02, 05 and 06 save `pending-<number>.json` before attempting creation.
 The marker records the original API origin, method, exact path and request body,
@@ -98,7 +110,7 @@ mdlogic doc list --json
 # Set DOCUMENT_ID from the stable artifact.id in the create response.
 mdlogic doc get "$DOCUMENT_ID" --json > observed.json
 # Review observed.json against the correction before submitting this exact guard.
-REVISION=$(jq -er '.document.revision' observed.json)
+REVISION=$(jq -er '.document.revision | select(type=="string" and length>0)' observed.json)
 mdlogic doc update "$DOCUMENT_ID" fixtures/report-updated.md \
   --expected-revision "$REVISION" --json
 mdlogic versions list "$DOCUMENT_ID" --json

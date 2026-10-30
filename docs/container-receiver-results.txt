@@ -1,12 +1,55 @@
-test_webhook_receivers (__main__.BridgeReceivers.test_webhook_receivers) ... ok
+Sequential official-container validation; synthetic localhost fixtures only.
+
+Command: python3 tests/container_bind.py node-docker
+test_webhook_receivers (__main__.BridgeReceivers.test_webhook_receivers) ... PASS node-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+ok
 
 ----------------------------------------------------------------------
-Ran 1 test in 10.041s
+Ran 1 test in 2.722s
 
 OK
-PASS node-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
-PASS java-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
-PASS go-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
-PASS python-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
-PASS shell-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
-PASS csharp-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+
+Command: python3 tests/container_bind.py java-docker
+test_webhook_receivers (__main__.BridgeReceivers.test_webhook_receivers) ... PASS java-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 10.126s
+
+OK
+
+Command: python3 tests/container_bind.py go-docker
+test_webhook_receivers (__main__.BridgeReceivers.test_webhook_receivers) ... PASS go-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 5.075s
+
+OK
+
+Command: python3 tests/container_bind.py python-docker
+test_webhook_receivers (__main__.BridgeReceivers.test_webhook_receivers) ... PASS python-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 2.014s
+
+OK
+
+Command: python3 tests/container_bind.py shell-docker
+test_webhook_receivers (__main__.BridgeReceivers.test_webhook_receivers) ... PASS shell-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 2.570s
+
+OK
+
+Command: python3 tests/container_bind.py csharp-docker
+test_webhook_receivers (__main__.BridgeReceivers.test_webhook_receivers) ... PASS csharp-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 1.508s
+
+OK

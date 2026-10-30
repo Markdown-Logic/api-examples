@@ -1,26 +1,79 @@
-test_create_recovery_and_input_validation (__main__.ContractTests.test_create_recovery_and_input_validation) ... ok
-test_scenarios_and_failures (__main__.ContractTests.test_scenarios_and_failures) ... ok
-test_webhook_receivers (__main__.ContractTests.test_webhook_receivers) ... ok
+Sequential official-container validation; synthetic localhost fixtures only.
+
+Command: python3 tests/verify.py node-docker
+test_create_recovery_and_input_validation (__main__.ContractTests.test_create_recovery_and_input_validation) ... PASS node-docker: uncertain share/webhook rerun blocked, strict UTF-8, malformed mutation evidence retained
+ok
+test_scenarios_and_failures (__main__.ContractTests.test_scenarios_and_failures) ... PASS node-docker: 01–06, retry bounds/date/fallback, write refusal/uncertainty, auth, private output, redirects
+ok
+test_webhook_receivers (__main__.ContractTests.test_webhook_receivers) ... PASS node-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+ok
 
 ----------------------------------------------------------------------
-Ran 3 tests in 231.938s
+Ran 3 tests in 42.225s
 
 OK
-PASS node-docker: uncertain share/webhook rerun blocked, strict UTF-8, malformed mutation evidence retained
-PASS java-docker: uncertain share/webhook rerun blocked, strict UTF-8, malformed mutation evidence retained
-PASS go-docker: uncertain share/webhook rerun blocked, strict UTF-8, malformed mutation evidence retained
-PASS python-docker: uncertain share/webhook rerun blocked, strict UTF-8, malformed mutation evidence retained
-PASS shell-docker: uncertain share/webhook rerun blocked, strict UTF-8, malformed mutation evidence retained
-PASS csharp-docker: uncertain share/webhook rerun blocked, strict UTF-8, malformed mutation evidence retained
-PASS node-docker: 01–06, retry bounds/date/fallback, write refusal/uncertainty, auth, private output, redirects
-PASS java-docker: 01–06, retry bounds/date/fallback, write refusal/uncertainty, auth, private output, redirects
-PASS go-docker: 01–06, retry bounds/date/fallback, write refusal/uncertainty, auth, private output, redirects
-PASS python-docker: 01–06, retry bounds/date/fallback, write refusal/uncertainty, auth, private output, redirects
-PASS shell-docker: 01–06, retry bounds/date/fallback, write refusal/uncertainty, auth, private output, redirects
-PASS csharp-docker: 01–06, retry bounds/date/fallback, write refusal/uncertainty, auth, private output, redirects
-PASS node-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
-PASS java-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
-PASS go-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
-PASS python-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
-PASS shell-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
-PASS csharp-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+
+Command: python3 tests/verify.py java-docker
+test_create_recovery_and_input_validation (__main__.ContractTests.test_create_recovery_and_input_validation) ... PASS java-docker: uncertain share/webhook rerun blocked, strict UTF-8, malformed mutation evidence retained
+ok
+test_scenarios_and_failures (__main__.ContractTests.test_scenarios_and_failures) ... PASS java-docker: 01–06, retry bounds/date/fallback, write refusal/uncertainty, auth, private output, redirects
+ok
+test_webhook_receivers (__main__.ContractTests.test_webhook_receivers) ... PASS java-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 148.706s
+
+OK
+
+Command: python3 tests/verify.py go-docker
+test_create_recovery_and_input_validation (__main__.ContractTests.test_create_recovery_and_input_validation) ... PASS go-docker: uncertain share/webhook rerun blocked, strict UTF-8, malformed mutation evidence retained
+ok
+test_scenarios_and_failures (__main__.ContractTests.test_scenarios_and_failures) ... PASS go-docker: 01–06, retry bounds/date/fallback, write refusal/uncertainty, auth, private output, redirects
+ok
+test_webhook_receivers (__main__.ContractTests.test_webhook_receivers) ... PASS go-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 94.562s
+
+OK
+
+Command: python3 tests/verify.py python-docker
+test_create_recovery_and_input_validation (__main__.ContractTests.test_create_recovery_and_input_validation) ... PASS python-docker: uncertain share/webhook rerun blocked, strict UTF-8, malformed mutation evidence retained
+ok
+test_scenarios_and_failures (__main__.ContractTests.test_scenarios_and_failures) ... PASS python-docker: 01–06, retry bounds/date/fallback, write refusal/uncertainty, auth, private output, redirects
+ok
+test_webhook_receivers (__main__.ContractTests.test_webhook_receivers) ... PASS python-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 54.921s
+
+OK
+
+Command: python3 tests/verify.py shell-docker
+test_create_recovery_and_input_validation (__main__.ContractTests.test_create_recovery_and_input_validation) ... PASS shell-docker: uncertain share/webhook rerun blocked, strict UTF-8, malformed mutation evidence retained
+ok
+test_scenarios_and_failures (__main__.ContractTests.test_scenarios_and_failures) ... PASS shell-docker: 01–06, retry bounds/date/fallback, write refusal/uncertainty, auth, private output, redirects
+ok
+test_webhook_receivers (__main__.ContractTests.test_webhook_receivers) ... PASS shell-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 68.841s
+
+OK
+
+Command: python3 tests/verify.py csharp-docker
+test_create_recovery_and_input_validation (__main__.ContractTests.test_create_recovery_and_input_validation) ... PASS csharp-docker: uncertain share/webhook rerun blocked, strict UTF-8, malformed mutation evidence retained
+ok
+test_scenarios_and_failures (__main__.ContractTests.test_scenarios_and_failures) ... PASS csharp-docker: 01–06, retry bounds/date/fallback, write refusal/uncertainty, auth, private output, redirects
+ok
+test_webhook_receivers (__main__.ContractTests.test_webhook_receivers) ... PASS csharp-docker: webhook valid, duplicate/restart, bad/stale/future/tampered signature, signed ID/type checks, multi-v1
+ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 39.793s
+
+OK

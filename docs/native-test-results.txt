@@ -3,7 +3,7 @@ test_scenarios_and_failures (__main__.ContractTests.test_scenarios_and_failures)
 test_webhook_receivers (__main__.ContractTests.test_webhook_receivers) ... ok
 
 ----------------------------------------------------------------------
-Ran 3 tests in 154.580s
+Ran 3 tests in 337.914s
 
 OK
 PASS node: uncertain share/webhook rerun blocked, strict UTF-8, malformed mutation evidence retained

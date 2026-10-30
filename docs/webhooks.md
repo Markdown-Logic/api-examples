@@ -8,11 +8,11 @@ Run any implementation's `webhook` command with `MDLOGIC_WEBHOOK_SECRET` injecte
 
 ## Authenticate before accepting work
 
-MDL sends `MDL-Signature: t=<unix-seconds>,v1=<hex-hmac>`. Compute HMAC-SHA256 using the literal signing secret over the decimal timestamp, a dot, and the **exact raw body bytes**. Do not parse and reserialize JSON before verification, strip the `whsec_` prefix or substitute a different algorithm. Check both stale and future timestamps within 300 seconds. Accept any matching `v1` during secret rotation and compare digests securely.
+MDL sends `MDL-Signature: t=<unix-seconds>,v1=<hex-hmac>`. Compute HMAC-SHA256 using the literal signing secret over the **exact timestamp text from the header**, a dot, and the **exact raw body bytes**. Parse the timestamp separately for the freshness check; do not normalize its text before computing the digest. Do not parse and reserialize JSON before verification, strip the `whsec_` prefix or substitute a different algorithm. Check both stale and future timestamps within 300 seconds. Accept any matching `v1` during secret rotation and compare digests securely.
 
 The signed JSON envelope carries `id`, `type`, `created`, `teamId`, `actor` and `data.object`. The receivers validate the signature first and require the signed body's `id` to match `MDL-Event-Id`; they also check a supplied `MDL-Event-Type`. `MDL-Delivery-Id` identifies delivery to one destination and stays stable across retries. Each attempt refreshes its timestamp/signature; deduplicate using the authenticated event ID. Route by stable document ID and authorized team/project mapping, not by mutable path or email. An event about a deleted resource can contain its last known state.
 
-The local handlers cap bodies at 1 MiB and durably publish a complete private inbox record under the SHA-256 of the authenticated event ID, with exclusive atomic publication. They return 202 for new acceptance and 200 for duplicates, including after restart; invalid signatures return 401 and malformed identity returns 400. The file is the queued work item. No report/business action runs inside the request handler.
+The local handlers cap bodies at 1 MiB and atomically publish a complete private inbox record under the SHA-256 of the authenticated event ID, with exclusive atomic publication. They return 202 for new acceptance and 200 for duplicates, including after restart; invalid signatures return 401 and malformed identity returns 400. The file is the queued work item. No report/business action runs inside the request handler.
 
 A production implementation should use a database transaction with a unique event ID plus durable job enqueue, then process asynchronously with idempotent business effects. Inbox acceptance and completed processing are separate states. Coordinate concurrent workers, record processing failures and retention, and tolerate late/repeated events by reading/reconciling current state rather than assuming arrival order. Do not mark an event processed and then perform an unprotected side effect.
 
@@ -20,6 +20,6 @@ MDL treats non-2xx responses, redirects and timeouts as unsuccessful. Its delive
 
 ## Compare implementations
 
-[Node receiver](../node/webhook.mjs) · [Java receiver](../java/ReportExamples.java) · [C# receiver](../csharp/WebhookReceiver.cs) · [Go receiver](../go/main.go) · [Python receiver](../python/receiver.py) · [shell/Python receiver](../shell/webhook.py)
+[Node receiver](../node/webhook.mjs) · [Java receiver](../java/src/main/java/com/markdownlogic/examples/WebhookListener.java) · [C# receiver](../csharp/WebhookReceiver.cs) · [Go receiver](../go/webhook.go) · [Python receiver](../python/receiver.py) · [shell/Python receiver](../shell/webhook.py)
 
-The shared tests send valid, duplicate, concurrent, stale, future, tampered, mismatched-identity and multi-signature deliveries using a synthetic secret. See [validation](validation.md). The public [webhook guide](https://markdownlogic.com/help/en/receive-webhooks) is the product reference.
+The shared tests send valid, duplicate, concurrent, stale, future, tampered, mismatched-identity, exact-timestamp-text and multi-signature deliveries using a synthetic secret. See [validation](validation.md). The public [webhook guide](https://markdownlogic.com/help/en/receive-webhooks) is the product reference.

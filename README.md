@@ -55,12 +55,12 @@ HTTPS origins are required; HTTP is allowed only on literal loopback hosts for t
 
 | # | Scenario | Corresponding outbound event | Code |
 | --- | --- | --- | --- |
-| 01 | Create a project, read one list page, update its name | `project.created`, `project.updated` | [Node](node/run.mjs) · [Java](java/ReportExamples.java) · [C#](csharp/Program.cs) · [Go](go/main.go) · [Python](python/run.py) · [shell](shell/run.sh) |
-| 02 | Store a generated report; persist stable document ID | `document.created` | Same numbered entry in each file above |
-| 03 | Read current source/revision; submit a guarded correction | `document.updated` when changed | Same numbered entry |
-| 04 | Read one history page/snapshot and export HTML | No event for reads or export | Same numbered entry |
-| 05 | Explicitly create a 30-day share; save its URL privately | `share.created` | Same numbered entry |
-| 06 | Register a destination using the event catalogue | Then receive the events above | Same numbered entry + each language's receiver |
+| 01 | Create a project, read one list page, update its name | `project.created`, `project.updated` | [Node](node/scenarios/01-project.mjs) · [Java](java/src/main/java/com/markdownlogic/examples/ProjectScenario.java) · [C#](csharp/CreateProjectScenario.cs) · [Go](go/scenario_01_project.go) · [Python](python/scenarios.py) · [shell](shell/scenarios.sh) |
+| 02 | Store a generated report; persist stable document ID | `document.created` | [Node](node/scenarios/02-store-report.mjs) · [Java](java/src/main/java/com/markdownlogic/examples/CreateReportScenario.java) · [C#](csharp/StoreReportScenario.cs) · [Go](go/scenario_02_create_report.go) · [Python](python/scenarios.py) · [shell](shell/scenarios.sh) |
+| 03 | Read current source/revision; submit a guarded correction | `document.updated` when changed | [Node](node/scenarios/03-update-report.mjs) · [Java](java/src/main/java/com/markdownlogic/examples/UpdateReportScenario.java) · [C#](csharp/UpdateReportScenario.cs) · [Go](go/scenario_03_update_report.go) · [Python](python/scenarios.py) · [shell](shell/scenarios.sh) |
+| 04 | Read one history page/snapshot and export HTML | No event for reads or export | [Node](node/scenarios/04-history-export.mjs) · [Java](java/src/main/java/com/markdownlogic/examples/ExportReportScenario.java) · [C#](csharp/ExportReportScenario.cs) · [Go](go/scenario_04_export_report.go) · [Python](python/scenarios.py) · [shell](shell/scenarios.sh) |
+| 05 | Explicitly create a 30-day share; save its URL privately | `share.created` | [Node](node/scenarios/05-share-report.mjs) · [Java](java/src/main/java/com/markdownlogic/examples/ShareReportScenario.java) · [C#](csharp/ShareReportScenario.cs) · [Go](go/scenario_05_share_report.go) · [Python](python/scenarios.py) · [shell](shell/scenarios.sh) |
+| 06 | Register a destination using the event catalogue | Then receive the events above | [Node](node/scenarios/06-register-webhook.mjs) · [Java](java/src/main/java/com/markdownlogic/examples/RegisterWebhookScenario.java) · [C#](csharp/RegisterWebhookScenario.cs) · [Go](go/scenario_06_register_webhook.go) · [Python](python/scenarios.py) · [shell](shell/scenarios.sh) |
 
 01–03 create or change remote content when you run them with real credentials. 04 and 05 are separate commands so exporting and sharing are explicit. History/export/sharing remain subject to the account's plan, role, credential and sharing policy. Scenario 03 is an intentional correction to a synthetic report; adapt its read/review step to your product's edit policy before using it on user-edited content.
 

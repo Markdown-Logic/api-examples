@@ -1,12 +1,55 @@
-test_response_validation_and_source_preservation (__main__.ResponseValidationTests.test_response_validation_and_source_preservation) ... PASS node-docker: typed fields/revisions, history errors, safe logs, huge throttles, CRLF
-PASS java-docker: typed fields/revisions, history errors, safe logs, huge throttles, CRLF
-PASS go-docker: typed fields/revisions, history errors, safe logs, huge throttles, CRLF
-PASS python-docker: typed fields/revisions, history errors, safe logs, huge throttles, CRLF
-PASS shell-docker: typed fields/revisions, history errors, safe logs, huge throttles, CRLF
-PASS csharp-docker: typed fields/revisions, history errors, safe logs, huge throttles, CRLF
+Sequential official-container validation; synthetic localhost fixtures only.
+
+Command: python3 tests/response_validation.py node-docker
+test_response_validation_and_source_preservation (__main__.ResponseValidationTests.test_response_validation_and_source_preservation) ... PASS node-docker: typed fields/revisions, mapping/history/catalogue validation, safe logs, huge throttles, CRLF
 ok
 
 ----------------------------------------------------------------------
-Ran 1 test in 43.305s
+Ran 1 test in 6.881s
+
+OK
+
+Command: python3 tests/response_validation.py java-docker
+test_response_validation_and_source_preservation (__main__.ResponseValidationTests.test_response_validation_and_source_preservation) ... PASS java-docker: typed fields/revisions, mapping/history/catalogue validation, safe logs, huge throttles, CRLF
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 38.942s
+
+OK
+
+Command: python3 tests/response_validation.py go-docker
+test_response_validation_and_source_preservation (__main__.ResponseValidationTests.test_response_validation_and_source_preservation) ... PASS go-docker: typed fields/revisions, mapping/history/catalogue validation, safe logs, huge throttles, CRLF
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 32.844s
+
+OK
+
+Command: python3 tests/response_validation.py python-docker
+test_response_validation_and_source_preservation (__main__.ResponseValidationTests.test_response_validation_and_source_preservation) ... PASS python-docker: typed fields/revisions, mapping/history/catalogue validation, safe logs, huge throttles, CRLF
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 9.949s
+
+OK
+
+Command: python3 tests/response_validation.py shell-docker
+test_response_validation_and_source_preservation (__main__.ResponseValidationTests.test_response_validation_and_source_preservation) ... PASS shell-docker: typed fields/revisions, mapping/history/catalogue validation, safe logs, huge throttles, CRLF
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 18.914s
+
+OK
+
+Command: python3 tests/response_validation.py csharp-docker
+test_response_validation_and_source_preservation (__main__.ResponseValidationTests.test_response_validation_and_source_preservation) ... PASS csharp-docker: typed fields/revisions, mapping/history/catalogue validation, safe logs, huge throttles, CRLF
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 4.959s
 
 OK
