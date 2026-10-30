@@ -65,6 +65,30 @@ func TestWebhookSignature(t *testing.T) {
 	if verifySignature(signature(raw, now.Unix()), append(raw, ' '), secret, now) {
 		t.Fatal("accepted changed raw bytes")
 	}
+	changedTimestamp := strings.Replace(signature(raw, now.Unix()), "t=", "t=0", 1)
+	if verifySignature(changedTimestamp, raw, secret, now) {
+		t.Fatal("accepted changed timestamp text without a matching signature")
+	}
+}
+
+func TestLoadStateRejectsMalformedMapping(t *testing.T) {
+	t.Setenv("MDLOGIC_STATE_DIR", t.TempDir())
+	path := filepath.Join(stateDir(), "state.json")
+	for _, raw := range []string{"null", "[]", `{"projectId":123}`, "invalid JSON"} {
+		if err := os.WriteFile(path, []byte(raw), 0600); err != nil {
+			t.Fatal(err)
+		}
+		if _, err := loadState(); err == nil {
+			t.Errorf("accepted malformed mapping: %s", raw)
+		}
+	}
+	if err := os.WriteFile(path, []byte(`{"projectId":"project-1"}`), 0600); err != nil {
+		t.Fatal(err)
+	}
+	saved, err := loadState()
+	if err != nil || saved.ProjectID != "project-1" {
+		t.Fatalf("valid mapping rejected: state=%+v error=%v", saved, err)
+	}
 }
 func TestReadRetryWriteSingleAttempt(t *testing.T) {
 	requests := 0
@@ -136,20 +160,20 @@ func TestLargeExportRefusesPartialResult(t *testing.T) {
 }
 func TestCreatePendingMarkerBlocksRepeat(t *testing.T) {
 	t.Setenv("MDLOGIC_STATE_DIR", t.TempDir())
-	if err := pending("02", "/api/v1/projects/project-1/artifacts", object{"content": "original synthetic report"}); err != nil {
+	if err := beginCreate("02", "/api/v1/projects/project-1/artifacts", object{"content": "original synthetic report"}); err != nil {
 		t.Fatal(err)
 	}
-	if err := pending("02", "/api/v1/projects/project-1/artifacts", object{"content": "original synthetic report"}); err == nil {
+	if err := beginCreate("02", "/api/v1/projects/project-1/artifacts", object{"content": "original synthetic report"}); err == nil {
 		t.Fatal("uncertain create was allowed to repeat")
 	}
 	raw, err := os.ReadFile(filepath.Join(os.Getenv("MDLOGIC_STATE_DIR"), "pending-02.json"))
 	if err != nil || !strings.Contains(string(raw), "original synthetic report") {
 		t.Fatal("original operation was not preserved")
 	}
-	if err := done("02"); err != nil {
+	if err := completeCreate("02"); err != nil {
 		t.Fatal(err)
 	}
-	if err := pending("02", "/api/v1/projects/project-1/artifacts", object{"content": "original synthetic report"}); err != nil {
+	if err := beginCreate("02", "/api/v1/projects/project-1/artifacts", object{"content": "original synthetic report"}); err != nil {
 		t.Fatal(err)
 	}
 }

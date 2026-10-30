@@ -2,6 +2,29 @@
 
 These are small server-side examples using only the Go standard library. Go 1.22 or later is required. Run commands from the repository root; the wrapper builds locally and keeps build output under ignored `.local/`.
 
+## Reading the examples
+
+Start with [scenario 03](scenario_03_update_report.go) to see a complete read, revision check and update. Each numbered file contains one task, in the same order as the command table below. The scenarios return errors to the command entry point; they do not hide a failed call or retry a mutation.
+
+| File | Responsibility |
+| --- | --- |
+| [main.go](main.go) | Command selection and Ctrl-C cancellation |
+| [scenarios.go](scenarios.go) | Prerequisite checks and scenario dispatch |
+| [scenario_01_project.go](scenario_01_project.go) | Create, list and rename a project |
+| [scenario_02_create_report.go](scenario_02_create_report.go) | Create a report without replacing existing content |
+| [scenario_03_update_report.go](scenario_03_update_report.go) | Update using the current opaque revision |
+| [scenario_04_export_report.go](scenario_04_export_report.go) | Read history and export HTML |
+| [scenario_05_share_report.go](scenario_05_share_report.go) | Create an explicitly requested share |
+| [scenario_06_register_webhook.go](scenario_06_register_webhook.go) | Register report lifecycle events |
+| [api.go](api.go) | Authentication, HTTP deadlines, safe errors and bounded GET retries |
+| [state.go](state.go) | Private mappings, atomic saves and pending-create journals |
+| [config.go](config.go) | Environment settings and service-origin validation |
+| [webhook.go](webhook.go) | Signature checks, duplicate suppression and listener lifecycle |
+
+The Go files form one `main` package. `go/run.sh` builds that package, so a scenario can use the documented common helpers without copying authentication or recovery logic. No additional Go modules are required.
+
+## Running a scenario
+
 Configure an existing access token and team through environment variables, following the root getting-started guide. With no `MDLOGIC_TOKEN`, the program instead exchanges `MDLOGIC_CLIENT_ID` and `MDLOGIC_CLIENT_SECRET` server-side for `projects:read documents:read documents:write`. Tokens are kept in memory. A token obtained through supported user authorization can also be supplied; client credentials do not impersonate another account.
 
 | Command | Report scenario |
