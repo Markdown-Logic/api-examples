@@ -47,7 +47,7 @@ Create a 30-day document link after the user requests sharing and your applicati
 
 ## 06 — React to changes
 
-An owner/admin separately configures a public HTTPS receiver using an authorized setup credential. The report application's ordinary user consent token cannot manage that configuration. Start the receiver and subscribe before the report changes: registering a destination does not replay earlier events. [The webhook guide](webhooks.md) explains raw-byte authentication, inbox acceptance and processing after acknowledgment.
+After delivery availability is confirmed, an owner/admin separately configures a public HTTPS receiver using an authorized setup token with `projects:read` and `access-keys:manage`. Setup endpoints alone do not establish that outbound sending is active. The report application's ordinary user consent token cannot manage that configuration. Start the receiver and subscribe before the report changes: registering a destination does not replay earlier events. [The webhook guide](webhooks.md) explains raw-byte authentication, inbox acceptance and processing after acknowledgment.
 
 ## Recover an uncertain write
 

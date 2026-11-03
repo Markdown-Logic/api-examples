@@ -34,6 +34,10 @@ Do not update this file from a staging endpoint or generate it from unreleased s
 
 The examples use the published routes and response shapes in the bundled reference. Defensive HTTP 423 handling preserves source when a deployment temporarily refuses content changes; the snapshot does not establish availability of that response or a protection feature. No example changes protection or security settings.
 
-CLI commands target published `mdlogic` 1.1.0. They do not assume behavior from unreleased versions. See the [shell guide](../shell/README.md) for the commands and their scope.
+CLI commands target published `mdlogic` 1.1.1. They do not assume behavior from unreleased versions. See the [shell guide](../shell/README.md) for the commands and their scope.
 
 Public API, authorization metadata and help links are collected in the [introduction](../docs/api-introduction.md) and [link-check.json](link-check.json), which records their HTTP status and check date.
+
+## Current focused audit
+
+The complete snapshot above remains the historical 2026-10-29 download. [current-contract-audit.json](current-contract-audit.json) records a fresh public-spec hash and the report operations, required scopes and revision/share fields checked on 2026-11-03. It is an audit record, not a replacement OpenAPI document or SDK contract. Unrelated notification/mobile routes were not copied into the examples. [Audit notes](../docs/current-contract-audit.md) explain CLI checks and the refused MCP discovery probe.

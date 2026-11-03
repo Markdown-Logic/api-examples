@@ -1,0 +1,143 @@
+{
+  "verifiedAt": "2026-11-03T01:47:48.762094+00:00",
+  "source": {
+    "url": "https://api.markdownlogic.com/api/v1/openapi.json",
+    "sha256": "fa23fa3f19ec6b496877077e3b9b1aadc1e1dcacd665364fda66b464bc65fd9f",
+    "bytes": 482365,
+    "infoVersion": "1.1.0",
+    "productionCommit": null
+  },
+  "scope": "Selected reporting operations only; audit notes, not an OpenAPI document or exhaustive typed contract. Unrelated mobile/notification operations are not copied.",
+  "operations": {
+    "GET /api/v1/teams/{teamId}/projects": {
+      "requiredScope": "projects:read",
+      "requestProperties": [],
+      "requiredRequestFields": [],
+      "publishedResponseSchemas": false
+    },
+    "POST /api/v1/teams/{teamId}/projects": {
+      "requiredScope": "documents:write",
+      "requestProperties": [],
+      "requiredRequestFields": [],
+      "publishedResponseSchemas": false
+    },
+    "PATCH /api/v1/projects/{projectId}": {
+      "requiredScope": "documents:write",
+      "requestProperties": [],
+      "requiredRequestFields": [],
+      "publishedResponseSchemas": false
+    },
+    "POST /api/v1/projects/{projectId}/artifacts": {
+      "requiredScope": "documents:write",
+      "requestProperties": [
+        "name",
+        "logicalName",
+        "content",
+        "markdown",
+        "changeNote",
+        "format",
+        "contentType",
+        "folderPath",
+        "ifNotExists",
+        "expectedId",
+        "expectedRevision",
+        "createFolders",
+        "copyFrom"
+      ],
+      "requiredRequestFields": [],
+      "publishedResponseSchemas": true
+    },
+    "GET /api/v1/projects/{projectId}/documents/{documentId}": {
+      "requiredScope": "documents:read",
+      "requestProperties": [],
+      "requiredRequestFields": [],
+      "publishedResponseSchemas": true
+    },
+    "PUT /api/v1/projects/{projectId}/documents/{documentId}": {
+      "requiredScope": "documents:write",
+      "requestProperties": [
+        "content",
+        "format",
+        "expectedRevision",
+        "changeNote"
+      ],
+      "requiredRequestFields": [
+        "content",
+        "expectedRevision"
+      ],
+      "publishedResponseSchemas": true
+    },
+    "GET /api/v1/projects/{projectId}/documents/{documentId}/versions": {
+      "requiredScope": "documents:read",
+      "requestProperties": [],
+      "requiredRequestFields": [],
+      "publishedResponseSchemas": true
+    },
+    "GET /api/v1/projects/{projectId}/documents/{documentId}/versions/{versionId}": {
+      "requiredScope": "documents:read",
+      "requestProperties": [],
+      "requiredRequestFields": [],
+      "publishedResponseSchemas": true
+    },
+    "GET /api/v1/projects/{projectId}/documents/{documentId}/renders/{format}": {
+      "requiredScope": "documents:read",
+      "requestProperties": [],
+      "requiredRequestFields": [],
+      "publishedResponseSchemas": true
+    },
+    "POST /api/v1/projects/{projectId}/documents/{documentId}/shares": {
+      "requiredScope": "documents:write",
+      "requestProperties": [
+        "name",
+        "password",
+        "brandAssetId",
+        "acknowledgeSensitive",
+        "expiresInDays"
+      ],
+      "requiredRequestFields": [],
+      "publishedResponseSchemas": true
+    },
+    "GET /api/v1/webhooks/events": {
+      "requiredScope": "projects:read",
+      "requestProperties": [],
+      "requiredRequestFields": [],
+      "publishedResponseSchemas": false
+    },
+    "POST /api/v1/teams/{teamId}/webhooks": {
+      "requiredScope": "access-keys:manage",
+      "requestProperties": [],
+      "requiredRequestFields": [],
+      "publishedResponseSchemas": false
+    }
+  },
+  "shareExpiresInDays": [
+    30,
+    60,
+    90,
+    365,
+    null
+  ],
+  "readRevisionType": "string",
+  "cli": {
+    "version": "1.1.1",
+    "node": "^22.0.0 || ^24.0.0 || ^26.0.0",
+    "source": "https://registry.npmjs.org/mdlogic/latest",
+    "packageIntegrity": "sha512-LGgQTxlfeq4DrMec6zfkW/qOIR7yu/Ssg8+NkHDA9IKXqkF0mOhmWbubMptrWJxZIWqQyTc2NfOus00Z89BXyg==",
+    "checks": "Published CLI --version, doc create/update/share create and global --help inspected locally; no authenticated calls executed."
+  },
+  "mcp": {
+    "public": "https://markdownlogic.com/mcp",
+    "private": "https://mcp.markdownlogic.com",
+    "publicDiscoveryProbe": {
+      "method": "initialize",
+      "status": 403,
+      "retried": false,
+      "note": "Read-only HTTP discovery was refused; no tools/call, conversion or private access attempted. Do not infer live MCP acceptance from REST tests."
+    },
+    "documentation": "https://markdownlogic.com/help/en/connect-an-ai-assistant"
+  },
+  "developerDomain": {
+    "url": "https://developers.markdownlogic.com/",
+    "status": "DNS unresolved at initial audit; backlink withheld until verified live."
+  }
+}

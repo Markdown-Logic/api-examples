@@ -1,8 +1,15 @@
 # JavaScript / Node
 
+## Read projects first
+
+`node node/read-projects.mjs` uses `MDLOGIC_TEAM` and a server-held credential. Its client-credentials exchange requests only `projects:read`; a supplied token must already carry that scope. It reads one project page, prints stable project IDs and `hasMore`, and creates no local mapping or remote content. A page with `hasMore=true` is incomplete. It never automatically selects or changes a project.
+
+The numbered scenarios below include writes: 01 creates/renames a project, 02 creates source, 03 submits a guarded update, 05 shares, and 06 configures an optional destination. 04 explicitly exports HTML.
+
 Use Node 22 or later, with no packages to install. Run from the repository root:
 
 ```sh
+node node/read-projects.mjs # Read only: one authorized project page
 node node/run.mjs 01   # Create/list/update a project
 node node/run.mjs 02   # Store the synthetic generated report
 node node/run.mjs 03   # Read and submit a guarded correction
@@ -32,8 +39,10 @@ This is **server-side JavaScript**. Never ship client credentials, long-lived ac
 [webhook.mjs](webhook.mjs) authenticates raw request bytes with MDL's HMAC-SHA256 contract, checks the timestamp and signed event identity, and atomically queues a complete inbox entry before acknowledgment. Duplicate IDs survive restarts. Run behind your public HTTPS ingress; the local listener must not be registered with live MDL. See [webhooks](../docs/webhooks.md) for production processing responsibilities.
 
 ```sh
-node --test node/test.mjs
+node --test node/test.mjs node/read-projects.test.mjs
 python3 tests/verify.py node
 ```
 
 The Node unit tests check malformed local mappings and response fields. The shared contract suite uses synthetic localhost services only. No SDK, live tenant or provider is involved.
+
+Webhook examples are optional contract/setup demonstrations. Confirm delivery availability first; catalogue/registration availability alone does not establish active outbound sending. See the [webhook availability and setup notes](../docs/webhooks.md).

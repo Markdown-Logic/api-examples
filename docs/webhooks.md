@@ -1,8 +1,10 @@
 # Webhooks for the report workflow
 
+This is an optional contract/setup example. Confirm that outbound webhook delivery is enabled for your deployment before depending on events; catalogue and destination endpoints alone do not prove delivery availability. No sample activates a provider or changes service settings.
+
 Report creation/update emits `document.created` / `document.updated`; project setup emits `project.created` / `project.updated`; explicit sharing emits `share.created`. Reads, history inspection and exports emit none of those change events. The server's authenticated `GET /api/v1/webhooks/events` catalogue is authoritative; scenario 06 verifies its requested names before registering.
 
-Use an authorized owner/admin setup credential with `access-keys:manage`. This is a separate administration task from a user's reporting connection; third-party user consent grants cannot get this scope. POST `/api/v1/teams/{teamId}/webhooks` with a public HTTPS `url`, selected `events` and a description. The response contains `secret` **once**. Each example saves that response privately as `webhook.json` and prints only an ID and path. Its normal client-credentials exchange requests reporting scopes only, so use an appropriately authorized `MDLOGIC_TOKEN` for 06.
+Use an authorized owner/admin setup credential with `projects:read` for the catalogue and `access-keys:manage` for registration. This is a separate administration task from a user's reporting connection; third-party user consent grants cannot get this scope. POST `/api/v1/teams/{teamId}/webhooks` with a public HTTPS `url`, selected `events` and a description. The response contains `secret` **once**. Each example saves that response privately as `webhook.json` and prints only an ID and path. Its normal client-credentials exchange requests reporting scopes only, so use an appropriately authorized `MDLOGIC_TOKEN` for 06.
 
 Run any implementation's `webhook` command with `MDLOGIC_WEBHOOK_SECRET` injected into its environment. It listens on `127.0.0.1:8080` (`PORT` overrides). A real deployment needs a public HTTPS ingress; never register the local test server against live MDL. The server also rejects undeliverable private-address destinations. Register before the changes you want to receive; this example does not replay history.
 

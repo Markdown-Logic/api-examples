@@ -2,6 +2,7 @@ import { readInput, required } from '../state.mjs';
 
 /** Store generated Markdown without replacing an existing logical document. */
 export async function run(request, state, env) {
+  // docs:begin store-report
   const body = {
     name: 'report.md',
     content: await readInput(env.MDLOGIC_INPUT || 'fixtures/report.md'),
@@ -15,6 +16,7 @@ export async function run(request, state, env) {
   state.mapping.documentId = required(result.artifact?.id, 'valid document ID');
   state.mapping.revision = required(result.artifact?.revision, 'valid revision');
   await state.saveMapping();
+  // docs:end store-report
   await state.finishCreate('02');
   return { scenario: '02', documentId: state.mapping.documentId, decision: result.decision };
 }

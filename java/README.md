@@ -48,7 +48,7 @@ GET requests retry only HTTP 429, with at most three attempts. They honor numeri
 
 ## Corresponding webhooks
 
-An owner/admin with `access-keys:manage` must perform registration separately from a third-party user's document grant. Supply that administrative token explicitly; the ordinary client-credentials exchange requests only document/project scopes. Registration uses the live event catalogue and stores the once-only signing secret privately in `.local/java/webhook.json`.
+An owner/admin with `projects:read` and `access-keys:manage` must perform registration separately from a third-party user's document grant. Supply that administrative token explicitly; the ordinary client-credentials exchange requests only document/project scopes. Registration uses the live event catalogue and stores the once-only signing secret privately in `.local/java/webhook.json`.
 
 ```sh
 export MDLOGIC_WEBHOOK_URL='https://your-public-receiver.example/webhook'
@@ -70,3 +70,5 @@ python3 tests/verify.py java
 ```
 
 Both use isolated localhost services and synthetic secrets. No live account is modified.
+
+Webhook examples are optional contract/setup demonstrations. Confirm delivery availability first; catalogue/registration availability alone does not establish active outbound sending. See the [webhook availability and setup notes](../docs/webhooks.md).

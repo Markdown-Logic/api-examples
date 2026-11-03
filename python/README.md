@@ -36,7 +36,7 @@ Set `MDLOGIC_INPUT` to your generated UTF-8 source for 02/03. Invalid UTF-8 is r
 
 ## Receive corresponding webhooks
 
-Scenario 06 needs a separate owner/admin setup token with `access-keys:manage`. The ordinary reporting scopes and third-party user's consent token cannot manage destinations. Register your public HTTPS ingress before generating events, then inject its once-only secret into the receiver:
+Scenario 06 needs a separate owner/admin setup token with `projects:read` and `access-keys:manage`. The ordinary reporting scopes and third-party user's consent token cannot manage destinations. Register your public HTTPS ingress before generating events, then inject its once-only secret into the receiver:
 
 ```sh
 export MDLOGIC_WEBHOOK_URL='https://your-public-receiver.example/webhook'
@@ -56,3 +56,5 @@ python3 tests/verify.py python
 ```
 
 The shared suite uses ephemeral localhost endpoints, synthetic credentials and signed synthetic webhook deliveries. It makes no live tenant changes.
+
+Webhook examples are optional contract/setup demonstrations. Confirm delivery availability first; catalogue/registration availability alone does not establish active outbound sending. See the [webhook availability and setup notes](../docs/webhooks.md).

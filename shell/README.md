@@ -62,7 +62,7 @@ short-lived form file. Disable shell tracing (`set -x`) around all secret setup.
 
 ## Receive corresponding webhooks
 
-Configure a separate owner/admin credential with `access-keys:manage` for setup;
+Configure a separate owner/admin credential with `projects:read` and `access-keys:manage` for setup;
 the ordinary report application's scopes do not manage destinations. A
 third-party user's consent grant cannot acquire that administrative scope.
 Registration checks the event catalogue before subscribing to document/project
@@ -94,23 +94,32 @@ normal retention and access policy.
 
 ## Equivalent mdlogic CLI commands
 
-These commands target published **mdlogic 1.1.0**. Behavior from unreleased
+These commands target published **mdlogic 1.1.1**. Behavior from unreleased
 versions is not assumed.
 The curl scripts above implement their own deliberately narrower retry policy;
 CLI internal transport behavior is not a promise of this repository.
-Use an already installed `mdlogic` 1.1.0; no install is needed for curl examples.
+Use an already installed `mdlogic` 1.1.1; no install is needed for curl examples.
 
 ```bash
+# Install the verified release; requires Node 22, 24 or 26.
+npm install -g mdlogic@1.1.1
+umask 077
 mdlogic --version
+# READ: check the authorized target before creating anything.
+mdlogic project list --team "$MDLOGIC_TEAM" --json
+# WRITE: explicitly create a separate example project when wanted.
 mdlogic project create 'Report integration example' --team "$MDLOGIC_TEAM" --json
 mdlogic project list --team "$MDLOGIC_TEAM" --json
 # Copy the chosen stable project ID to MDLOGIC_PROJECT through your environment.
-mdlogic doc create fixtures/report.md --name report.md --json
+# WRITE: creates report.md and refuses an existing destination.
+mdlogic doc create fixtures/report.md --name report.md --json > created.json
+DOCUMENT_ID=$(jq -er '.artifact.id | select(type=="string" and length>0)' created.json)
 mdlogic doc list --json
-# Set DOCUMENT_ID from the stable artifact.id in the create response.
+# READ: fetch the stable document identity and current revision.
 mdlogic doc get "$DOCUMENT_ID" --json > observed.json
 # Review observed.json against the correction before submitting this exact guard.
 REVISION=$(jq -er '.document.revision | select(type=="string" and length>0)' observed.json)
+# WRITE: submit the correction only after reviewing the current source.
 mdlogic doc update "$DOCUMENT_ID" fixtures/report-updated.md \
   --expected-revision "$REVISION" --json
 mdlogic versions list "$DOCUMENT_ID" --json
@@ -121,7 +130,7 @@ mdlogic render "$DOCUMENT_ID" --format html --out report.html
 mdlogic share create "$DOCUMENT_ID" --expires-in 30 --json > share.json
 ```
 
-Use `umask 077` before redirecting private CLI output. The CLI has no project
+The block sets `umask 077` before writing private CLI output. The CLI has no project
 metadata update or webhook management command, so the corresponding REST calls
 remain in 01 and 06. Feature/plan/role checks still apply. The CLI JSON create
 result uses `artifact`, live reads use `document`, and revision is an opaque
@@ -139,3 +148,5 @@ shared suite covers all six scenarios, bounded 429 retries (seconds/date/missing
 header), exhausted/long waits, revoked auth, revision conflict, temporary refusal,
 uncertain write, redirects, private outputs, authentic webhook handling and
 persistent duplicate suppression.
+
+Webhook examples are optional contract/setup demonstrations. Confirm delivery availability first; catalogue/registration availability alone does not establish active outbound sending. See the [webhook availability and setup notes](../docs/webhooks.md).

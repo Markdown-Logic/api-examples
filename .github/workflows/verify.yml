@@ -1,0 +1,34 @@
+name: Synthetic examples
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  contract-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+      - name: Prepare the pinned Java dependency
+        run: mvn -q -f java/pom.xml dependency:resolve
+      - name: Offline reference and focused tests
+        run: |
+          python3 tests/reference_check.py
+          node --test node/test.mjs node/read-projects.test.mjs
+          python3 python/test_python.py
+          python3 shell/test_shell.py
+          python3 java/test_java.py
+          cd go
+          go test -race ./...
+          go vet ./...
+      - name: Synthetic contracts and malformed responses
+        run: |
+          python3 tests/verify.py node java shell go python
+          python3 tests/response_validation.py node java shell go python

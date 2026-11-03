@@ -4,6 +4,18 @@ An application generates a report, stores it in its user's Markdown Logic projec
 
 Start with the [API introduction](docs/api-introduction.md), [report integration guide](docs/report-workflow.md) and [API reference / OpenAPI](reference/README.md). The [error guide](docs/errors.md) explains refusals and uncertain results; the [webhook guide](docs/webhooks.md) connects the request workflow to events.
 
+## Read before writing
+
+For a first connection, start with the read-only Node example:
+
+```sh
+export MDLOGIC_TEAM='your-authorized-team-id'
+# Inject MDLOGIC_TOKEN, or client credentials, through your secret manager.
+node node/read-projects.mjs
+```
+
+It needs only `projects:read`, lists one bounded project page and prints stable IDs plus `hasMore`. It does not create a project, save a mapping, export or share. Choose an authorized target before running the explicitly writing scenarios below. See the [read-first guide](node/README.md#read-projects-first).
+
 ## Pick a language
 
 | Language | Setup | Run one scenario from this directory |
@@ -51,7 +63,7 @@ node node/run.mjs 03
 
 HTTPS origins are required; HTTP is allowed only on literal loopback hosts for tests. Redirects are refused. Run each language with a separate state directory. Files contain private reports, share links and signing secrets: do not serve or commit `.local/`, and configure user-only ACLs on Windows. The examples assume one process per state directory; production needs database coordination.
 
-## Same scenarios, same results
+## Explicit write scenarios and on-request reads
 
 | # | Scenario | Corresponding outbound event | Code |
 | --- | --- | --- | --- |
@@ -66,7 +78,7 @@ HTTPS origins are required; HTTP is allowed only on literal loopback hosts for t
 
 01, 02, 05 and 06 retain private pending-operation files if a create fails or its result is uncertain. Re-running cannot silently create another project, report, share or destination. Reconcile the captured target and payload first. Later writes also remain single-attempt; [read the recovery guide](docs/report-workflow.md#recover-an-uncertain-write).
 
-For webhooks, start a receiver and register 06 **before** making changes you want to observe. Registration requires a separate authorized owner/admin setup credential with `access-keys:manage`; ordinary report-app user grants cannot manage destinations. Never register the local test server with live MDL. See [webhook setup and durable inboxes](docs/webhooks.md).
+Scenario 06 is optional webhook contract/setup work: confirm delivery availability first, then register before changes you want to observe. Catalogue or destination endpoints alone do not establish that delivery is enabled. Setup requires a separate authorized owner/admin token with **both** `projects:read` for the catalogue and `access-keys:manage` for registration; ordinary report-app user grants cannot manage destinations. Never register the local test server with live MDL. See [webhook setup and durable inboxes](docs/webhooks.md).
 
 ## Test locally
 
@@ -78,8 +90,11 @@ python3 python/test_python.py
 python3 java/test_java.py
 python3 shell/test_shell.py
 (cd go && go test -race ./...)
-python3 tests/reference_check.py         # Offline snapshot integrity / scenario route parity
+python3 tests/reference_check.py         # Offline snapshot/audit integrity, scopes and routes
+node --test node/test.mjs node/read-projects.test.mjs
 ```
+
+The [current contract audit](docs/current-contract-audit.md) records verified public API/CLI behavior and MCP discovery limits. REST scripts are not MCP tools; see the [MCP connection notes](docs/mcp.md).
 
 The contract harness uses ephemeral localhost HTTP servers, synthetic credentials and signed synthetic webhook fixtures. It performs no live tenant changes or provider calls. Runtime floors beyond the versions in the [evidence](docs/validation.md) are declared requirements, not a broad platform qualification.
 

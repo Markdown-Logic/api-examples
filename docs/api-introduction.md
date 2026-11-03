@@ -1,8 +1,8 @@
 # API introduction
 
-Markdown Logic stores text and structured documents inside team projects. Your application's backend can create content, keep it current, render a downloadable file, and create a revocable share link. Outbound webhooks report changes so integrations can react without repeatedly polling document lists.
+Markdown Logic stores text and structured documents inside team projects. Your application's backend can create content, keep it current, render a downloadable file, and create a revocable share link. An optional webhook example demonstrates the event contract; confirm delivery availability before depending on it. Published routes and successful setup do not establish that outbound delivery is enabled.
 
-The canonical authenticated API origin is `https://api.markdownlogic.com`. Resource paths begin `/api/v1`. Send JSON as `Content-Type: application/json` and an OAuth access token as `Authorization: Bearer …`. Renders return file bytes instead of JSON. The [live API index](https://api.markdownlogic.com/) and [published OpenAPI document](https://api.markdownlogic.com/api/v1/openapi.json) are the reference; this repository includes an [unchanged pinned snapshot](../reference/openapi.json).
+The canonical authenticated API origin is `https://api.markdownlogic.com`. Resource paths begin `/api/v1`. Send JSON as `Content-Type: application/json` and an OAuth access token as `Authorization: Bearer …`. Renders return file bytes instead of JSON. The [live API index](https://api.markdownlogic.com/) and [published OpenAPI document](https://api.markdownlogic.com/api/v1/openapi.json) are the reference; this repository includes a historical [unchanged pinned snapshot](../reference/openapi.json).
 
 ## Authentication and account boundaries
 
@@ -10,7 +10,7 @@ The issuer is `https://auth.markdownlogic.com`. Its [authorization-server metada
 
 For your own account's backend automation, exchange client ID and secret at `/oauth/token` with `grant_type=client_credentials`. Each language shows that exchange, or accepts an already obtained `MDLOGIC_TOKEN`. For another person's account, use an authorized OAuth client and authorization code with **PKCE S256** and verified state; keep the token exchange, refresh tokens and client secret on your server. [The workflow guide](report-workflow.md#connect-the-right-account) describes the supported distinction and callback responsibilities.
 
-Request only the scopes needed by the operation: `projects:read` to see teams/projects, `documents:read` for content/history/renders, and `documents:write` for report/project/share changes. Scope alone does not grant membership, role, plan capabilities or access to another team. A team-bound credential remains bound to that team. Webhook administration separately requires `access-keys:manage` and owner/admin permission. Third-party user consent grants do not receive that administrative scope.
+Request only the scopes needed by the operation: `projects:read` to see teams/projects, `documents:read` for content/history/renders, and `documents:write` for report/project/share changes. Scope alone does not grant membership, role, plan capabilities or access to another team. A team-bound credential remains bound to that team. Webhook setup separately needs `projects:read` for its catalogue read, plus `access-keys:manage` and owner/admin permission for registration. Third-party user consent grants do not receive that administrative scope.
 
 JavaScript here runs in **Node on the server**. A browser bundle, localStorage or publicly served configuration cannot protect a long-lived token or client secret. Keep those credentials behind an authenticated application backend that checks its own user-to-MDL connection mapping.
 

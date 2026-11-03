@@ -44,7 +44,7 @@ The source file is never edited or removed. Writes are sent once. A 423 conversi
 
 ## Receive matching events
 
-An MDL team owner/admin must register a publicly reachable HTTPS destination. Registration requires `access-keys:manage`, so the normal report credential and third-party user grant cannot do this. Use a separately authorized admin token for this explicit setup command:
+An MDL team owner/admin must register a publicly reachable HTTPS destination. Catalogue discovery requires `projects:read` and registration requires `access-keys:manage`, so the normal report credential and third-party user grant cannot do this. Use a separately authorized admin token for this explicit setup command:
 
 ```sh
 export MDLOGIC_WEBHOOK_URL='https://hooks.example.com/webhook'
@@ -67,3 +67,5 @@ Share URLs live in private `share.json`, not stdout. Treat the exported HTML as 
 ## Verification status
 
 See [TESTING.md](TESTING.md). The host has no .NET SDK, but this implementation was compiled and executed in the official .NET 8 SDK container (Linux arm64). Use `bash containers/run.sh csharp setup`, then `bash containers/run.sh csharp 01` from the repository root. [Container quick starts](../containers/README.md) explain secret injection, state and localhost networking. No live account requests are needed for the test suite.
+
+Webhook examples are optional contract/setup demonstrations. Confirm delivery availability first; catalogue/registration availability alone does not establish active outbound sending. See the [webhook availability and setup notes](../docs/webhooks.md).

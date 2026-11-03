@@ -49,7 +49,7 @@ Mutations are single-attempt, including `429`, network failures, timeouts and ca
 
 ## Webhooks
 
-For registration, set `MDLOGIC_WEBHOOK_URL` to an explicit public HTTPS receiver. Scenario 06 checks the live catalogue before subscribing to `document.created`, `document.updated`, `project.created`, `project.updated` and `share.created`. Configure this once as an owner/admin with a separately authorized token carrying `access-keys:manage`. The default client-credentials exchange requests only report scopes. Third-party user grants cannot acquire the administration scope; have the account's administrator register the destination instead. Keep the once-only secret from the private `webhook.json` response in your server's secret store.
+For registration, set `MDLOGIC_WEBHOOK_URL` to an explicit public HTTPS receiver. Scenario 06 checks the live catalogue before subscribing to `document.created`, `document.updated`, `project.created`, `project.updated` and `share.created`. Configure this once as an owner/admin with a separately authorized token carrying `projects:read` and `access-keys:manage`. The default client-credentials exchange requests only report scopes. Third-party user grants cannot acquire the administration scope; have the account's administrator register the destination instead. Keep the once-only secret from the private `webhook.json` response in your server's secret store.
 
 Set `MDLOGIC_WEBHOOK_SECRET` and optionally `PORT` (default `8080`) before starting the receiver. It binds `127.0.0.1`; use an HTTPS ingress for an actual public deployment. No local test registers that loopback receiver against a live MDL service.
 
@@ -67,3 +67,5 @@ GOCACHE=/tmp/mdlogic-api-examples-go-cache go vet ./...
 ```
 
 From repository root, `python3 tests/verify.py go` runs the same synthetic localhost contract checks as the other languages. Tests call no live tenant or provider. Localhost binding may require the execution environment's test approval.
+
+Webhook examples are optional contract/setup demonstrations. Confirm delivery availability first; catalogue/registration availability alone does not establish active outbound sending. See the [webhook availability and setup notes](../docs/webhooks.md).

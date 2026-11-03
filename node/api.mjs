@@ -101,7 +101,7 @@ function parseJson(bytes) {
  * the application's own account; a person's connection uses the documented
  * authorization flow and supplies its access token through MDLOGIC_TOKEN.
  */
-export async function connect(env = process.env) {
+export async function connect(env = process.env, { scope = 'projects:read documents:read documents:write' } = {}) {
   const base = origin(env.MDLOGIC_API_ORIGIN || 'https://api.markdownlogic.com');
   let token = env.MDLOGIC_TOKEN;
   if (!token) {
@@ -113,7 +113,7 @@ export async function connect(env = process.env) {
       grant_type: 'client_credentials',
       client_id: env.MDLOGIC_CLIENT_ID,
       client_secret: env.MDLOGIC_CLIENT_SECRET,
-      scope: 'projects:read documents:read documents:write',
+      scope,
     });
     const { response, bytes } = await send(`${issuer}/oauth/token`, {
       method: 'POST',
