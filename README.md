@@ -2,6 +2,8 @@
 
 An application generates a report, stores it in its user's Markdown Logic project, refreshes it safely, and exports or shares it when asked. Six small scenarios show the same workflow in **JavaScript/Node, Java, C#, Go, Python and shell**. These are readable integration examples, with direct HTTP calls and small local helpers.
 
+The [Markdown Logic developer hub](https://developers.markdownlogic.com/) brings together quickstarts, authentication, API references, CLI and MCP guides. This repository remains the canonical source for the runnable examples and code excerpts.
+
 Start with the [API introduction](docs/api-introduction.md), [report integration guide](docs/report-workflow.md) and [API reference / OpenAPI](reference/README.md). The [error guide](docs/errors.md) explains refusals and uncertain results; the [webhook guide](docs/webhooks.md) connects the request workflow to events.
 
 ## Read before writing
